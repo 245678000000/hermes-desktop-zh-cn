@@ -28,10 +28,10 @@ module.exports = [
     file: 'src/components/desktop-onboarding-overlay.tsx',
     addImport: "import { t } from '@/i18n'",
     replacements: [
-      // FlowSubtitle 常量
-      { find: "Opens your browser to sign in, then continues here", replace: "t('onboarding.pkceSubtitle')" },
-      { find: "Opens a verification page in your browser \u2014 Hermes connects automatically", replace: "t('onboarding.deviceCodeSubtitle')" },
-      { find: "Sign in once in your terminal, then come back to chat", replace: "t('onboarding.externalSubtitle')" },
+      // FlowSubtitle 常量 - 需要替换带引号的完整值
+      { find: "pkce: 'Opens your browser to sign in, then continues here',", replace: "pkce: t('onboarding.pkceSubtitle')," },
+      { find: "device_code: 'Opens a verification page in your browser \u2014 Hermes connects automatically',", replace: "device_code: t('onboarding.deviceCodeSubtitle')," },
+      { find: "external: 'Sign in once in your terminal, then come back to chat'", replace: "external: t('onboarding.externalSubtitle')" },
 
       // Header 组件
       { find: "Let's get you setup with Hermes Agent", replace: "t('onboarding.title')" },
@@ -46,9 +46,9 @@ module.exports = [
       { find: "{showAll ? 'Collapse' : 'Other providers'}", replace: "{showAll ? t('onboarding.collapse') : t('onboarding.otherProviders')}" },
       { find: "I have an API key", replace: "t('onboarding.haveKey')" },
 
-      // FeaturedProviderRow
-      { find: "Recommended", replace: "t('onboarding.recommended')" },
-      { find: "Connected", replace: "t('onboarding.connected')" },
+      // FeaturedProviderRow - 使用更精确的匹配
+      { find: ">{Recommended}<", replace: `>{t('onboarding.recommended')}<` },
+
       // FEATURED_PITCH 常量
       { find: "'One subscription, 300+ frontier models \u2014 the recommended way to run Hermes'", replace: "t('onboarding.nousDesc')" },
 
@@ -60,47 +60,35 @@ module.exports = [
       { find: "'Could not save credential.'", replace: "t('onboarding.saveFailed')" },
       { find: "'Paste API key'", replace: "t('onboarding.pasteKey')" },
       { find: "{saving ? 'Connecting' : 'Connect'}", replace: "{saving ? t('onboarding.connecting') : t('onboarding.connect')}" },
-      // API_KEY_OPTIONS 的 description/short 不会被替换（产品名称保持英文）
 
       // FlowPanel
-      { find: "`Starting sign-in for ${title}...`", replace: "t('onboarding.startingSignIn').replace('...', title)" },
-      { find: "`Verifying your code with ${title}...`", replace: "t('onboarding.verifying').replace('...', title)" },
+      { find: "`Starting sign-in for ${title}...`", replace: "t('onboarding.startingSignIn', { provider: title })" },
+      { find: "`Verifying your code with ${title}...`", replace: "t('onboarding.verifying', { provider: title })" },
       { find: "`${title} connected. Picking a default model...`", replace: "t('onboarding.pickingModel')" },
       { find: "'Sign-in failed. Try again.'", replace: "t('onboarding.signInFailed')" },
       { find: "Pick a different provider", replace: "t('onboarding.pickDifferent')" },
       { find: "`Sign in with ${title}`", replace: "t('onboarding.signInWith', { provider: title })" },
-      { find: "`We opened ${title} in your browser.`", replace: "t('onboarding.openedBrowser').replace('...', title)" },
+      { find: "`We opened ${title} in your browser.`", replace: "t('onboarding.openedBrowser', { provider: title })" },
       { find: "Authorize Hermes there.", replace: "t('onboarding.authorize')" },
       { find: "Copy the authorization code and paste it below.", replace: "t('onboarding.copyCode')" },
       { find: "'Paste authorization code'", replace: "t('onboarding.pasteCode')" },
       { find: "Re-open authorization page", replace: "t('onboarding.reopenAuth')" },
-      { find: "Continue", replace: "t('onboarding.continue')" },
       // external_pending
-      { find: "`${title} signs in through its own CLI. Run this command in a terminal, then come back and pick \"I've signed in\":`", replace: "t('onboarding.cliSignIn')" },
-      { find: "I've signed in", replace: "t('onboarding.continue')" },
-      // polling
-      { find: "`We opened ${title} in your browser. Enter this code there:`", replace: "t('onboarding.openedBrowser').replace('...', title) + ' ' + t('onboarding.copyCode')" },
       { find: "`Waiting for you to authorize...`", replace: "t('onboarding.authorize') + '...'" },
 
       // CodeBlock
       { find: "{copied ? <Check className=\"size-4\" /> : 'Copy'}", replace: "{copied ? <Check className=\"size-4\" /> : t('onboarding.copy')}" },
 
-      // CancelBtn
-      { find: "Cancel", replace: "t('onboarding.cancel')" },
-
       // ConfirmingModelPanel
-      { find: "Default model", replace: "t('onboarding.defaultModel')" },
-      { find: "Free tier", replace: "t('onboarding.freeTier')" },
-      { find: "'Pro'", replace: "t('onboarding.pro')" },
-      { find: "price.free ? 'Free' : `${price.input || '?'} in / ${price.output || '?'} out per Mtok`", replace: "price.free ? t('onboarding.free') : t('onboarding.tokenInOut', { in: price.input || '?', out: price.output || '?', })" },
-      { find: "Change", replace: "t('onboarding.change')" },
-      { find: "Start chatting", replace: "t('onboarding.startChatting')" },
-
-      // 手动模式关闭按钮
-      { find: ">Close<", replace: `>${"t('common.close')"}<` },
+      { find: ">Default model<", replace: `>{t('onboarding.defaultModel')}<` },
+      { find: ">Free tier<", replace: `>{t('onboarding.freeTier')}<` },
+      { find: ">Pro<", replace: `>{t('onboarding.pro')}<` },
+      { find: "price.free ? 'Free' : `${price.input || '?'} in / ${price.output || '?'} out per Mtok`", replace: "price.free ? t('onboarding.free') : t('onboarding.tokenInOut', { in: price.input || '?', out: price.output || '?' })" },
+      { find: ">Change<", replace: `>{t('onboarding.change')}<` },
+      { find: ">Start chatting<", replace: `>{t('onboarding.startChatting')}<` },
 
       // DocsLink (Get a key)
-      { find: "Get a key", replace: "t('onboarding.getAKey')" },
+      { find: ">Get a key<", replace: `>{t('onboarding.getAKey')}<` },
     ]
   },
 
@@ -113,8 +101,8 @@ module.exports = [
       // ApplyingView
       { find: "'Updating Hermes\u2026'", replace: "t('update.restarting')" },
       // ErrorView
-      { find: "Try again", replace: "t('common.retry')" },
-      { find: "Not now", replace: "t('update.notNow')" },
+      { find: ">Try again<", replace: `>{t('common.retry')}<` },
+      { find: ">Not now<", replace: `>{t('update.notNow')}<` },
     ]
   },
 
@@ -161,8 +149,8 @@ module.exports = [
       // Editing queued turn
       { find: "Editing queued turn in composer", replace: "t('composer.editingQueue')" },
       // Cancel / Save buttons in queue edit
-      { find: ">Cancel<", replace: `>${"t('composer.cancel')"}<` },
-      { find: ">Save<", replace: `>${"t('composer.save')"}<` },
+      { find: ">Cancel<", replace: `>{t('composer.cancel')}<` },
+      { find: ">Save<", replace: `>{t('composer.save')}<` },
     ]
   },
 
@@ -196,8 +184,6 @@ module.exports = [
       { find: ": 'Thinking'", replace: ": t('composer.thinking')" },
       { find: ": 'Muted'", replace: ": t('composer.muted')" },
       { find: ": 'Listening'", replace: ": t('composer.listening')" },
-      // DictationButton
-      { find: "aria =\n    status === 'recording' ? 'Stop dictation' : status === 'transcribing' ? 'Transcribing dictation' : 'Voice dictation'", replace: "aria =\n    status === 'recording' ? t('composer.stopDictation') : status === 'transcribing' ? t('composer.transcribingDictation') : t('composer.voiceDictation')" },
     ]
   },
 
@@ -208,17 +194,16 @@ module.exports = [
     file: 'src/app/chat/composer/context-menu.tsx',
     addImport: "import { t } from '@/i18n'",
     replacements: [
-      { find: ">Attach<", replace: `>${"t('ctx.attach')"}<` },
+      { find: ">Attach<", replace: `>{t('ctx.attach')}<` },
       { find: "Files\u2026", replace: "t('ctx.files')" },
       { find: "Folder\u2026", replace: "t('ctx.folder')" },
       { find: "Images\u2026", replace: "t('ctx.images')" },
       { find: "Paste image", replace: "t('ctx.pasteImage')" },
       { find: "URL\u2026", replace: "t('ctx.url')" },
-      { find: "<span>Prompt snippets</span>", replace: `<span>${"t('ctx.promptSnippets')"}</span>` },
+      { find: "<span>Prompt snippets</span>", replace: `<span>{t('ctx.promptSnippets')}</span>` },
       { find: "{ label: 'Code review'", replace: "{ label: t('ctx.codeReview')" },
       { find: "{ label: 'Implementation plan'", replace: "{ label: t('ctx.implementationPlan')" },
       { find: "{ label: 'Explain this'", replace: "{ label: t('ctx.explainThis')" },
-      { find: "Tip: type <kbd", replace: "t('ctx.tip').split('@')[0] + '<kbd" },
     ]
   },
 
@@ -237,12 +222,12 @@ module.exports = [
       { find: "label: 'Delete'", replace: "label: t('session.delete')" },
       // Rename dialog
       { find: "<DialogTitle>Rename session</DialogTitle>", replace: "<DialogTitle>{t('session.renameTitle')}</DialogTitle>" },
-      { find: "<DialogDescription>Give this chat a memorable title. Leave empty to clear.</DialogDescription>", replace: `<DialogDescription>${"t('session.renameHint')"}</DialogDescription>` },
+      { find: "<DialogDescription>Give this chat a memorable title. Leave empty to clear.</DialogDescription>", replace: `<DialogDescription>{t('session.renameHint')}</DialogDescription>` },
       { find: "'Untitled session'", replace: "t('session.untitled')" },
       { find: "notify({ durationMs: 2_000, kind: 'success', message: 'Renamed' })", replace: "notify({ durationMs: 2_000, kind: 'success', message: t('session.renamed') })" },
       { find: "notifyError(err, 'Rename failed')", replace: "notifyError(err, t('session.renameFailed'))" },
-      { find: ">Cancel<", replace: `>${"t('common.cancel')"}<` },
-      { find: ">Save<", replace: `>${"t('common.save')"}<` },
+      { find: ">Cancel<", replace: `>{t('common.cancel')}<` },
+      { find: ">Save<", replace: `>{t('common.save')}<` },
     ]
   },
 
@@ -264,7 +249,7 @@ module.exports = [
     file: 'src/components/chat/intro.tsx',
     addImport: "import { t } from '@/i18n'",
     replacements: [
-      // FALLBACK_COPY - 仅替换 headline（body 保持英文因为它们是丰富的对话式文字）
+      // FALLBACK_COPY - 仅替换 headline
       { find: "'What are we moving today?'", replace: "t('intro.greetings')" },
       { find: "'What\\'s on your mind?'", replace: "t('intro.greetings')" },
       { find: "'What should Hermes look at?'", replace: "t('intro.greetings')" },
