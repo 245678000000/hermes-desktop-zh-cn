@@ -270,4 +270,41 @@ module.exports = [
       { find: "Full transcript saved to", replace: "t('install.fullTranscript') + ' '" },
     ]
   },
+
+  // ═══════════════════════════════════════════════════════════════════
+  // plugins/hermes-bots/plugin.js — Hermes Bots 插件界面汉化
+  // ═══════════════════════════════════════════════════════════════════
+  {
+    file: 'src/plugins/hermes-bots/plugin.js',
+    replacements: [
+      { find: '"New Bot"', replace: '"新建机器人"' },
+      { find: '"Create Bot"', replace: '"创建机器人"' },
+      { find: '"What should this Bot help with?"', replace: '"这个机器人主要负责什么工作？"' },
+      { find: '"What should this agent help with?"', replace: '"该智能体主要负责什么？"' },
+      { find: '"New chat with this agent"', replace: '"与该智能体开启新对话"' },
+      { find: '"Hidden from the roster"', replace: '"从花名册中隐藏"' },
+      { find: '"The default profile cannot be deleted."', replace: '"默认配置不能被删除。"' },
+      { find: '"Agent Inbox"', replace: '"智能体收件箱"' },
+      { find: '"A bot"', replace: '"机器人"' },
+      { find: '"Routines"', replace: '"例程任务"' },
+      { find: '"Schedule"', replace: '"执行计划"' },
+      { find: '"Create Cronjob"', replace: '"创建定时任务"' },
+      { find: '"Create a cronjob for this bot"', replace: '"为此机器人创建定时任务"' },
+      { find: '"Delete cronjob"', replace: '"删除定时任务"' },
+      { find: '"Manage groups"', replace: '"管理群组"' },
+      { find: '"Remove from all groups"', replace: '"从所有群组中移除"' },
+      { find: '"Select a Bot or group first."', replace: '"请先选择一个机器人或群组。"' },
+      { find: '"Bot Chat"', replace: '"机器人对话"' },
+      { find: '"Status unknown"', replace: '"状态未知"' },
+      { find: '"Could not load bot metadata"', replace: '"无法加载机器人元数据"' },
+      { find: '"Could not load bot"', replace: '"无法加载机器人"' },
+      { find: '"Could not load bot groups"', replace: '"无法加载机器人群组"' },
+      { find: '"Could not create the agent."', replace: '"创建智能体失败。"' },
+      { find: '"Update this gateway to use Bot Mode"', replace: '"请升级网关以启用机器人模式"' },
+      { find: '"Update Hermes Desktop to open another Bot chat."', replace: '"请升级 Hermes Desktop 以打开新的机器人对话。"' },
+      { find: '"Group picture generation failed"', replace: '"群头像生成失败"' },
+      { find: '"No free name for the group."', replace: '"群组名称已被占用。"' },
+    ]
+  },
 ]
+
